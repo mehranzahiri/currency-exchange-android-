@@ -18,7 +18,13 @@ android {
 
         multiDexEnabled true
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "DB_NAME", "\"currency.realm\""
+        buildConfigField "String", "BASE_URL", "\"http://exchangeratesapi.io/v1/\""
+        buildConfigField "String", "BASE_URL_API", "\"http://api.exchangeratesapi.io/v1/\""
+
+        buildConfigField "int", "SCHEMA_VERSION", String.valueOf(1)
+
+//        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
