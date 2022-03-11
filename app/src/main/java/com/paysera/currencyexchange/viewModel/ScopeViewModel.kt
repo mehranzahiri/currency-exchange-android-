@@ -1,6 +1,5 @@
 package com.paysera.currencyexchange.viewModel
 
-import com.hamekara.app.viewModel.BaseViewModel
 import com.paysera.currencyexchange.di.get
 import com.paysera.currencyexchange.notificationcenter.FireCenter
 import kotlinx.coroutines.CoroutineExceptionHandler

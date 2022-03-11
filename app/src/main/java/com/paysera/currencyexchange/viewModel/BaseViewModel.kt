@@ -1,4 +1,4 @@
-package com.hamekara.app.viewModel
+package com.paysera.currencyexchange.viewModel
 
 import android.content.Intent
 import android.os.Bundle
