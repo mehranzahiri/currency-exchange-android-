@@ -2,6 +2,9 @@ package com.paysera.currencyexchange.di
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
+import com.paysera.currencyexchange.BuildConfig
+import com.paysera.currencyexchange.model.remote.http.RemoteApi
+import com.paysera.currencyexchange.model.remote.http.TokenInterceptor
 import com.paysera.currencyexchange.setting.CacheConfig
 import com.paysera.currencyexchange.setting.NetworkConfig
 import okhttp3.Cache
@@ -17,8 +20,8 @@ import java.util.concurrent.TimeUnit
 
 private const val NETWORK_MODULE = "network."
 
-val HODHOD_OK_HTTP_QUALIFIER = named("${NETWORK_MODULE}hodhod_ok_http")
-val HODHOD_RETROFIT_QUALIFIER = named("${NETWORK_MODULE}hodhod_retrofit")
+val CURRENCY_OK_HTTP_QUALIFIER = named("${NETWORK_MODULE}currency_ok_http")
+val CURRENCY_RETROFIT_QUALIFIER = named("${NETWORK_MODULE}currency_retrofit")
 
 val networkModule = module {
     single { NetworkConfig() }
@@ -32,6 +35,7 @@ val networkModule = module {
 
     single<Gson> {
 
+        //TODO : THIS BLOCK PROVIDE DATA FORMATTER FOR CONVERT RESPONSE
 //        val runtimeTypeAdapterFactory: RuntimeTypeAdapterFactory<VodStruct> =
 //                RuntimeTypeAdapterFactory
 //                        .of(VodStruct::class.java, "type")
@@ -44,23 +48,23 @@ val networkModule = module {
     }
 
 
-    single(HODHOD_OK_HTTP_QUALIFIER) {
+    single(CURRENCY_OK_HTTP_QUALIFIER) {
         newOkHttpClient()
     }
 
 
-    single(HODHOD_RETROFIT_QUALIFIER) {
+    single(CURRENCY_RETROFIT_QUALIFIER) {
 
         Retrofit.Builder()
-            .client(get(HODHOD_OK_HTTP_QUALIFIER))
-//            .baseUrl(BuildConfig.BASE_URL_API)
+            .client(get(CURRENCY_OK_HTTP_QUALIFIER))
+            .baseUrl(BuildConfig.BASE_URL_API)
             .addConverterFactory(GsonConverterFactory.create(get()))
             .build()
     }
 
-//    single {
-//        get<Retrofit>(HODHOD_RETROFIT_QUALIFIER).create(RemoteApi::class.java)
-//    }
+    single {
+        get<Retrofit>(CURRENCY_RETROFIT_QUALIFIER).create(RemoteApi::class.java)
+    }
 
 }
 
@@ -78,7 +82,7 @@ private fun newOkHttpClient(): OkHttpClient {
         .readTimeout(config.readTimeoutSeconds, TimeUnit.SECONDS)
         .writeTimeout(config.writeTimeoutSeconds, TimeUnit.SECONDS)
         .connectTimeout(config.connectTimeoutSeconds, TimeUnit.SECONDS)
-//            .addInterceptor(get<TokenInterceptor>())
+        .addInterceptor(get<TokenInterceptor>())
         .cache(get())
         .build()
 }
