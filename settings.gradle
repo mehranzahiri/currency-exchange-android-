@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 }
 rootProject.name = "Currency exchange"
 include ':app'
+include ':app:wheelpicker'

@@ -1,5 +1,6 @@
 package com.paysera.currencyexchange.model.remote.http
 
+import com.google.gson.JsonObject
 import com.paysera.currencyexchange.model.remote.domain.ResponseStruct
 import com.paysera.currencyexchange.phrase.Const
 import org.json.JSONObject
@@ -11,5 +12,5 @@ interface RemoteApi {
     suspend fun fetchRateList(
         @Query("access_key") accessKey: String,
         @Query("format") format: Int,
-    ): ResponseStruct<JSONObject>
+    ): ResponseStruct<JsonObject>
 }

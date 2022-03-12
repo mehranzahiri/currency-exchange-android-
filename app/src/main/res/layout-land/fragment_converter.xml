@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aigestudio="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layoutDirection="ltr"
+                android:orientation="vertical">
+
+                <com.google.android.material.appbar.AppBarLayout
+                    android:id="@+id/appbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fitsSystemWindows="true">
+
+                    <androidx.appcompat.widget.Toolbar
+                        android:id="@+id/toolbar"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@color/white"
+                        android:gravity="center"
+                        android:textSize="14sp"
+                        app:contentInsetStart="0dp"
+                        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                        app:theme="@style/ThemeOverlay.AppCompat.Dark">
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="visible">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_centerVertical="true"
+                                android:ellipsize="start"
+                                android:gravity="center"
+                                android:maxLength="30"
+                                android:padding="@dimen/padding_standard_x5"
+                                android:singleLine="true"
+                                android:src="@drawable/app_logo"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:visibility="visible" />
+
+                            <ImageView
+                                android:id="@+id/img_drawer_menu"
+                                android:layout_width="25dp"
+                                android:layout_height="match_parent"
+                                android:layout_alignParentStart="true"
+                                android:layout_marginStart="@dimen/margin_standardx2"
+                                android:contentDescription="@string/img_content"
+                                android:padding="@dimen/margin_standard"
+                                android:src="@drawable/home_icone"
+                                android:visibility="visible" />
+
+                            <FrameLayout
+                                android:id="@+id/frm_basket"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:layout_centerVertical="true">
+
+                                <ImageView
+                                    android:id="@+id/img_bascket"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="@dimen/margin_standard"
+                                    android:contentDescription="@string/img_content"
+                                    android:padding="@dimen/margin_standard"
+                                    android:src="@drawable/menu_icon"
+                                    android:visibility="visible" />
+
+                            </FrameLayout>
+
+                        </RelativeLayout>
+
+
+                    </androidx.appcompat.widget.Toolbar>
+
+                </com.google.android.material.appbar.AppBarLayout>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_standard_x6"
+                    android:layout_marginEnd="@dimen/margin_standard_x6"
+                    android:layout_marginTop="@dimen/margin_standard_x12"
+                    aigestudio:cardBackgroundColor="@color/white"
+                    aigestudio:cardCornerRadius="8dp"
+                    aigestudio:cardElevation="5dp"
+                    aigestudio:contentPadding="@dimen/padding_standard_x4">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="@dimen/padding_standard_x6"
+                            android:text="@{data.sellValue}"
+                            android:textColor="#C6C6C6"
+                            android:textSize="16sp"
+                            tools:text="1,000.00 US Dollars =" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/padding_standard_x6"
+                            android:text="@{data.buyValue}"
+                            android:textColor="@color/original_orange"
+                            android:textSize="21sp"
+                            android:textStyle="bold"
+                            tools:text="29,447.921 Ukrainian Hryvni" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:layout_marginTop="@dimen/margin_standardx4"
+                            android:orientation="horizontal">
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic__666800_trending_up_arrow_icon"
+                                aigestudio:tint="#4CAF50" />
+
+                            <ImageView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic__666800_trending_up_arrow_icon"
+                                aigestudio:tint="#DA0000" />
+
+                        </LinearLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.paysera.wheelpicker.WheelPicker
+                                android:id="@+id/l1"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/padding_standard_x4"
+                                android:layout_weight="1"
+                                aigestudio:wheel_atmospheric="true"
+                                aigestudio:wheel_curved="true"
+                                aigestudio:wheel_cyclic="true"
+                                aigestudio:wheel_item_text_color="#CACACA"
+                                aigestudio:wheel_item_text_size="24sp"
+                                aigestudio:wheel_selected_item_text_color="#2E2E2E" />
+
+                            <View
+                                android:layout_width="1dp"
+                                android:layout_height="match_parent"
+                                android:background="@drawable/horizontal_divider" />
+
+                            <com.paysera.wheelpicker.WheelPicker
+                                android:id="@+id/l2"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/padding_standard_x4"
+                                android:layout_weight="1"
+                                aigestudio:wheel_atmospheric="true"
+                                aigestudio:wheel_curved="true"
+                                aigestudio:wheel_cyclic="true"
+                                aigestudio:wheel_item_text_color="#CACACA"
+                                aigestudio:wheel_item_text_size="24sp"
+                                aigestudio:wheel_selected_item_text_color="#2E2E2E" />
+
+                        </LinearLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_standard_x12"
+                            android:layout_marginStart="@dimen/margin_standard"
+                            android:layout_marginEnd="@dimen/margin_standard"
+                            android:layout_marginBottom="@dimen/margin_standard"
+                            >
+
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/txt_input"
+                                android:hint="Enter value for exchange..."
+                                android:inputType="number"
+                                android:maxLength="20"
+                                android:singleLine="true"
+                                android:text="@={data.inputValue}" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                    </LinearLayout>
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="100dp"
+                    android:layout_marginLeft="@dimen/margin_standard_x6"
+                    android:layout_marginRight="@dimen/margin_standard_x6"
+                    android:textStyle="bold"
+                    android:onClick="@{()->data.convertPrice()}"
+                    android:text="Exchange"/>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="3" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+        </FrameLayout>
+
+
+    </androidx.core.widget.NestedScrollView>
+
+    <data>
+
+        <variable
+            name="data"
+            type="com.paysera.currencyexchange.viewModel.RateViewModel" />
+
+    </data>
+
+</layout>
