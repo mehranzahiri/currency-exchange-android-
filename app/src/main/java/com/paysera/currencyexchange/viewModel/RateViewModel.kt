@@ -3,9 +3,11 @@ package com.paysera.currencyexchange.viewModel
 import android.os.CountDownTimer
 import androidx.databinding.ObservableField
 import androidx.lifecycle.MutableLiveData
+import com.paysera.currencyexchange.R
 import com.paysera.currencyexchange.di.get
 import com.paysera.currencyexchange.model.repository.RateRepository
 import com.paysera.currencyexchange.phrase.Const
+import com.paysera.currencyexchange.utils.TextEditor
 import kotlinx.coroutines.launch
 
 class RateViewModel : ScopeViewModel() {
@@ -14,7 +16,12 @@ class RateViewModel : ScopeViewModel() {
     val rateList = rateRepository.rateList
     val rateMediatorList = rateRepository.rateMediatorList
 
-    val buyValue=MutableLiveData<String>()
+    val sellValue=MutableLiveData<String>().apply {
+        value="enter some value for buy"
+    }
+    val buyValue=MutableLiveData<String>().apply {
+        value="select some unit for sell"
+    }
     private lateinit var timer: CountDownTimer
 
     var sellPosition=0
@@ -51,17 +58,18 @@ class RateViewModel : ScopeViewModel() {
 
     fun onSellWheelChange(position:Int){
         sellPosition=position
-
-        convertPrice()
     }
 
     fun onBuyWheelChange(position:Int){
         buyPosition=position
-
-        convertPrice()
     }
 
-    private fun convertPrice(){
+    fun convertPrice(){
+        if (inputValue.get()===null) {
+            showMessage.value = R.string.rate_view_mode_invalid_input
+            return
+        }
+
         val from= rateList.value?.get(sellPosition)?.value
         if (from===null)return
 
@@ -70,6 +78,9 @@ class RateViewModel : ScopeViewModel() {
 
         val diffPercent=to/from
 
-        buyValue.value= ((inputValue.get()?.toDouble()!! * (diffPercent))).toString()
+        val inputAmount=inputValue.get()?.replace(",","")
+
+        sellValue.value= "${inputAmount?.let { TextEditor.commaSeparator(it) }} ${rateList.value?.get(sellPosition)?.unit} ="
+        buyValue.value= "${TextEditor.commaSeparator((inputAmount?.toDouble()!! * (diffPercent)).toInt().toString())} ${rateList.value?.get(buyPosition)?.unit}"
     }
 }
