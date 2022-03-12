@@ -17,6 +17,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.File
 import java.util.concurrent.TimeUnit
+import java.security.KeyStore
+import java.security.SecureRandom
+import java.security.cert.CertificateException
+import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
+import javax.net.ssl.*
 
 private const val NETWORK_MODULE = "network."
 
@@ -26,7 +32,7 @@ val CURRENCY_RETROFIT_QUALIFIER = named("${NETWORK_MODULE}currency_retrofit")
 val networkModule = module {
     single { NetworkConfig() }
 
-//    single { TokenInterceptor() }
+    single { TokenInterceptor() }
 
     single {
         val directory = File(androidContext().cacheDir, "okhttp")
@@ -69,20 +75,65 @@ val networkModule = module {
 }
 
 private fun newOkHttpClient(): OkHttpClient {
-    val config = get<NetworkConfig>()
-
+    val config: NetworkConfig = get()
 
     val dispatcher = Dispatcher().apply {
         maxRequests = config.maxRequests
         maxRequestsPerHost = config.maxRequestPerHost
     }
 
-    return OkHttpClient().newBuilder()
-        .dispatcher(dispatcher)
-        .readTimeout(config.readTimeoutSeconds, TimeUnit.SECONDS)
-        .writeTimeout(config.writeTimeoutSeconds, TimeUnit.SECONDS)
-        .connectTimeout(config.connectTimeoutSeconds, TimeUnit.SECONDS)
-        .addInterceptor(get<TokenInterceptor>())
-        .cache(get())
-        .build()
+    try {
+        // Create a trust manager that does not validate certificate chains
+        val trustAllCerts = arrayOf<TrustManager>(
+            object : X509TrustManager {
+                @Throws(CertificateException::class)
+                override fun checkClientTrusted(
+                    chain: Array<X509Certificate?>?,
+                    authType: String?
+                ) {
+                }
+
+                @Throws(CertificateException::class)
+                override fun checkServerTrusted(
+                    chain: Array<X509Certificate?>?,
+                    authType: String?
+                ) {
+                }
+
+                override fun getAcceptedIssuers(): Array<X509Certificate?>? {
+                    return arrayOf()
+                }
+            }
+        )
+
+        // Install the all-trusting trust manager
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, SecureRandom())
+        // Create an ssl socket factory with our all-trusting manager
+        val sslSocketFactory = sslContext.socketFactory
+        val trustManagerFactory: TrustManagerFactory =
+            TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm())
+        trustManagerFactory.init(null as KeyStore?)
+        val trustManagers: Array<TrustManager> =
+            trustManagerFactory.trustManagers
+        check(!(trustManagers.size != 1 || trustManagers[0] !is X509TrustManager)) {
+            "Unexpected default trust managers:" + trustManagers.contentToString()
+        }
+
+        val trustManager =
+            trustManagers[0] as X509TrustManager
+
+
+        return OkHttpClient().newBuilder()
+            .dispatcher(dispatcher)
+            .readTimeout(config.readTimeoutSeconds, TimeUnit.SECONDS)
+            .writeTimeout(config.writeTimeoutSeconds, TimeUnit.SECONDS)
+            .connectTimeout(config.connectTimeoutSeconds, TimeUnit.SECONDS)
+            .addInterceptor(get<TokenInterceptor>())
+            .sslSocketFactory(sslSocketFactory, trustManager)
+            .hostnameVerifier { _, _ -> true }
+            .build()
+    } catch (e: Exception) {
+        throw RuntimeException(e)
+    }
 }

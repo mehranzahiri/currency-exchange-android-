@@ -7,6 +7,14 @@
     <fragment
         android:id="@+id/splashFragment"
         android:name="com.paysera.currencyexchange.ui.fragment.IntroFragment"
-        android:label="SplashFragment" />
+        android:label="SplashFragment" >
+        <action
+            android:id="@+id/action_splashFragment_to_converterFragment"
+            app:destination="@id/converterFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/converterFragment"
+        android:name="com.paysera.currencyexchange.ui.fragment.ConverterFragment"
+        android:label="ConverterFragment" />
 
 </navigation>

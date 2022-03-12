@@ -117,4 +117,7 @@ dependencies {
     // Design
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.airbnb.android:lottie:3.4.1'
+
+    //Module
+    implementation project(':app:wheelpicker')
 }
