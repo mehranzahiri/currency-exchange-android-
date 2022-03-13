@@ -13,12 +13,9 @@ class IntroFragment : MvvmFragment<FragmentIntroBinding, AuthViewModel>(
     R.layout.fragment_intro,
     AuthViewModel::class.java
 ) {
-    private val startDelay = 3000L
 
     override fun onEveryInitialization(savedBundle: Bundle?) {
+        data.initIntroFragment()
 
-        Handler(Looper.getMainLooper()).postDelayed({
-            findNavController().navigate(R.id.action_splashFragment_to_converterFragment)
-        }, startDelay)
     }
 }

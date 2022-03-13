@@ -92,6 +92,17 @@
 
                 </com.google.android.material.appbar.AppBarLayout>
 
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/rec_wallet"
+                        tools:listitem="@layout/item_wallet"
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                        android:orientation="vertical" />
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -159,7 +170,7 @@
                             android:orientation="horizontal">
 
                             <com.paysera.wheelpicker.WheelPicker
-                                android:id="@+id/l1"
+                                android:id="@+id/pickker_withdraw"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/padding_standard_x4"
@@ -177,7 +188,7 @@
                                 android:background="@drawable/horizontal_divider" />
 
                             <com.paysera.wheelpicker.WheelPicker
-                                android:id="@+id/l2"
+                                android:id="@+id/picker_deposit"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/padding_standard_x4"
@@ -221,11 +232,13 @@
                             android:layout_marginLeft="@dimen/margin_standard_x6"
                             android:layout_marginRight="@dimen/margin_standard_x6"
                             android:textStyle="bold"
-                            android:onClick="@{()->data.convertPrice()}"
+                            android:onClick="@{()->data.onSubmitClicked()}"
                             android:text="Exchange"/>
                     </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
+                </androidx.appcompat.widget.LinearLayoutCompat>
+
 
             </androidx.appcompat.widget.LinearLayoutCompat>
 

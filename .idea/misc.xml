@@ -13,9 +13,11 @@
         <entry key="..\:/Currencyexchange/app/src/main/res/layout-sw600dp/fragment_converter.xml" value="0.128125" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout-sw600dp/fragment_intro.xml" value="0.128125" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout/activity_application.xml" value="0.15833333333333333" />
+        <entry key="..\:/Currencyexchange/app/src/main/res/layout/dialog_convert.xml" value="0.268" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout/fragment_converter.xml" value="0.268" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout/fragment_intro.xml" value="0.15260416666666668" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout/fragment_splash.xml" value="0.14351851851851852" />
+        <entry key="..\:/Currencyexchange/app/src/main/res/layout/item_wallet.xml" value="0.132" />
         <entry key="..\:/Currencyexchange/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.15729166666666666" />
         <entry key="..\:/Currencyexchange/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="..\:/Currencyexchange/app/wheelpicker/src/main/res/layout-v17/view_wheel_date_picker.xml" value="0.1" />
