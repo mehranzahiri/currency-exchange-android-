@@ -7,48 +7,67 @@ import android.text.TextWatcher
 import android.util.Log
 import com.paysera.currencyexchange.R
 import com.paysera.currencyexchange.databinding.FragmentConverterBinding
+import com.paysera.currencyexchange.dialog.DialCollection
+import com.paysera.currencyexchange.ui.adapter.WalletAdapter
 import com.paysera.currencyexchange.ui.template.MvvmFragment
 import com.paysera.currencyexchange.utils.TextEditor
 import com.paysera.currencyexchange.viewModel.RateViewModel
-import com.paysera.wheelpicker.WheelPicker
-import java.lang.NumberFormatException
-import java.text.DecimalFormat
-import java.text.NumberFormat
-import java.util.*
 
 class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
     R.layout.fragment_converter,
     RateViewModel::class.java
 ) {
+    private lateinit var adapter: WalletAdapter
 
     override fun onEveryInitialization(savedBundle: Bundle?) {
+        adapter = WalletAdapter(data).apply {
+            binding.recWallet.adapter = this
+        }
 
         data.rateMediatorList.observe(viewLifecycleOwner){
             Log.e(javaClass.simpleName,javaClass.simpleName)
         }
 
+        data.walletMediatorList.observe(viewLifecycleOwner){
+            Log.e(javaClass.simpleName,javaClass.simpleName)
+        }
+
         data.rateList.observe(viewLifecycleOwner){
-            binding.l1.data=it.map {
+            binding.pickkerWithdraw.data=it.map {
                 it.unit
             }
 
-            binding.l2.data=it.map {
+            binding.pickerDeposit.data=it.map {
                 it.unit
             }
-            Log.i("ok",it.toString())
+        }
+
+        data.convertDialog.observe(viewLifecycleOwner){
+            it?.let {
+                DialCollection.showConvertDialog(requireContext(),
+                    it.getString("from",""),
+                    it.getString("to",""),
+                    it.getString("from_unit",""),
+                    it.getString("to_unit",""),
+                    it.getString("commission",""))
+            }
+        }
+
+        data.walletList.observe(viewLifecycleOwner){
+            adapter.updateCustom(it)
         }
         data.initRateListFragment()
 
-        binding.l1.setOnItemSelectedListener { picker, item, position ->
+        binding.pickkerWithdraw.setOnItemSelectedListener { picker, item, position ->
             data.onSellWheelChange(position)
         }
 
-        binding.l2.setOnItemSelectedListener { picker, item, position ->
+        binding.pickerDeposit.setOnItemSelectedListener { picker, item, position ->
             data.onBuyWheelChange(position)
         }
 
-        binding.l1.typeface= Typeface.createFromAsset(requireActivity().assets,"gilory.ttf")
-        binding.l2.typeface= Typeface.createFromAsset(requireActivity().assets,"gilory.ttf")
+        binding.pickkerWithdraw.typeface= Typeface.createFromAsset(requireActivity().assets,"gilory.ttf")
+        binding.pickerDeposit.typeface= Typeface.createFromAsset(requireActivity().assets,"gilory.ttf")
 
         binding.txtInput.addTextChangedListener(object : TextWatcher{
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
@@ -68,8 +87,11 @@ class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
                     binding.txtInput.text?.length?.let { binding.txtInput.setSelection(it) }
 
                 binding.txtInput.addTextChangedListener(this)
+
+                data.onInputChange(p0)
             }
         })
+
 
     }
 }

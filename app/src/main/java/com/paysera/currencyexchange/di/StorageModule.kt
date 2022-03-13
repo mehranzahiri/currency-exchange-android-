@@ -1,7 +1,9 @@
 package com.paysera.currencyexchange.di
 
 import com.paysera.currencyexchange.model.local.sharepref.SharePref
+import com.paysera.currencyexchange.model.repository.AuthRepository
 import com.paysera.currencyexchange.model.repository.RateRepository
+import com.paysera.currencyexchange.model.repository.WalletRepository
 import com.paysera.currencyexchange.setting.CacheConfig
 import io.realm.Realm
 import io.realm.RealmConfiguration
@@ -14,6 +16,8 @@ val storageModule = module {
 
     //Repository
     single { RateRepository() }
+    single { WalletRepository() }
+    single { AuthRepository() }
 
     single {
         val config = RealmConfiguration.Builder()
