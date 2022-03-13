@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.paysera.currencyexchange.utils.TextEditor" />
+
+        <variable
+            name="data"
+            type="com.paysera.currencyexchange.viewModel.RateViewModel" />
+
+        <variable
+            name="item"
+            type="com.paysera.currencyexchange.model.remote.domain.WalletStruct" />
+
+    </data>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="@dimen/padding_standard"
+        android:paddingEnd="@dimen/padding_standard"
+        android:paddingTop="@dimen/padding_standard_x6"
+        android:paddingBottom="@dimen/padding_standard_x6"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="@dimen/padding_standard"
+            android:paddingEnd="@dimen/padding_standard"
+            android:shadowColor="@color/original_orange"
+            android:shadowRadius="15"
+            android:text="@{item.unit}"
+            android:textColor="@color/original_orange"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            tools:text="USD" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:commaSeparator="@{item.value+``}"
+            tools:text="USD" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+</layout>

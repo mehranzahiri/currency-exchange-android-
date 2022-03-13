@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Currency exchange</string>
+    <string name="app_name">Paysera</string>
+    <string name="loading">loading…</string>
+    <string name="all_popular_couriers_in_one_place">All popular couriers in one place</string>
+    <string name="delivery_service">Delivery service</string>
+    <string name="img_content">img_content</string>
+    <string name="rate_view_mode_invalid_input">Please enter valid amount !</string>
 </resources>
