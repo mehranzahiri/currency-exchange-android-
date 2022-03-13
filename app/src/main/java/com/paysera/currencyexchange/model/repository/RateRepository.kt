@@ -1,7 +1,6 @@
 package com.paysera.currencyexchange.model.repository
 
 
-import android.os.CountDownTimer
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import com.google.gson.JsonElement
