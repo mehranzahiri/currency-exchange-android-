@@ -40,9 +40,11 @@ class RateViewModel : ScopeViewModel() {
     val inputValue = ObservableField<String>()
 
     fun initRateListFragment() {
+        showProgressDialog.value = true
+
         fetchData()
 
-        timer = object : CountDownTimer(5000, 1000) {
+        timer = object : CountDownTimer(10_000, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
             override fun onFinish() {
                 fetchData()
@@ -50,10 +52,12 @@ class RateViewModel : ScopeViewModel() {
                 timer.start()
             }
         }
+
+        timer.start()
+
     }
 
     private fun fetchData() {
-        showProgressDialog.value = true
 
         scope.launch {
             rateRepository.fetchRateList(
@@ -132,8 +136,9 @@ class RateViewModel : ScopeViewModel() {
             var decreaseAmount = fromWallete.value - inputAmount.toDouble()
 
             var commission = 0.0
-            if (walletRepository.getExchangeCounter() > 5)
-                commission = (inputAmount.toDouble() * Const.COMMISSION_AMOUNT)
+            if (walletRepository.getExchangeCounter() > 5){
+                commission = Math.round((inputAmount.toDouble() * Const.COMMISSION_AMOUNT)*100.0)/100.0
+            }
 
             decreaseAmount -= commission
 

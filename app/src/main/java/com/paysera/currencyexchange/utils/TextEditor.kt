@@ -8,7 +8,7 @@ import java.util.*
 object TextEditor {
     fun commaSeparator(p0 :String):String{
         return try {
-            val originNumber = String.format("%.2f", p0.toDouble())
+            val originNumber = String.format("%.2f", p0.replace(",","").toDouble())
             val splitDecimal=originNumber.split(".")
             var originalString: String = splitDecimal[0]
             if (originalString.contains(",")) {

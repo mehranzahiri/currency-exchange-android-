@@ -36,6 +36,10 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="vertical">
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,15 +47,15 @@
                     android:padding="@dimen/padding_standard_x6"
                     android:fontFamily="@font/gilory_bold"
                     android:text="Currency converted"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
-                    android:text="@{`You have converted `+from+` `+from_unit+` to\n`+to+` `+to_unit+`. Commission fee `+commission+` `+from_unit}"
-                    android:padding="@dimen/padding_standard_x4"
+                    android:textSize="16sp"
+                    android:text="@{commission.equals(`-0 `)?`You have converted `+from+` `+from_unit+` to\n`+to+` `+to_unit+`. Commission fee is free yet.` : `You have converted `+from+` `+from_unit+` to\n`+to+` `+to_unit+`. Commission fee `+commission+` `+from_unit }"
+                    android:padding="@dimen/padding_standard_x6"
                     tools:text="Currency converted"
                     android:textStyle="normal"/>
 
