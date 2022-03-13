@@ -5,10 +5,11 @@
       <map>
         <entry key="..\:/Currencyexchange/app/src/main/res/drawable/divider.xml" value="0.24479166666666666" />
         <entry key="..\:/Currencyexchange/app/src/main/res/drawable/home_icone.xml" value="0.24479166666666666" />
+        <entry key="..\:/Currencyexchange/app/src/main/res/drawable/horizontal_divider.xml" value="0.21388888888888888" />
         <entry key="..\:/Currencyexchange/app/src/main/res/drawable/ic__666800_trending_up_arrow_icon.xml" value="0.2708333333333333" />
         <entry key="..\:/Currencyexchange/app/src/main/res/drawable/menu_icon.xml" value="0.24479166666666666" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout-land/activity_application.xml" value="0.24864864864864866" />
-        <entry key="..\:/Currencyexchange/app/src/main/res/layout-land/fragment_converter.xml" value="0.2954954954954955" />
+        <entry key="..\:/Currencyexchange/app/src/main/res/layout-land/fragment_converter.xml" value="0.268" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout-land/fragment_intro.xml" value="0.2954954954954955" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout-sw600dp/fragment_converter.xml" value="0.128125" />
         <entry key="..\:/Currencyexchange/app/src/main/res/layout-sw600dp/fragment_intro.xml" value="0.128125" />

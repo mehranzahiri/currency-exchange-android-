@@ -12,6 +12,12 @@ import com.paysera.currencyexchange.ui.adapter.WalletAdapter
 import com.paysera.currencyexchange.ui.template.MvvmFragment
 import com.paysera.currencyexchange.utils.TextEditor
 import com.paysera.currencyexchange.viewModel.RateViewModel
+import android.view.animation.LinearInterpolator
+
+import zone.com.lightsweep.ShineAnimator
+
+
+
 
 class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
     R.layout.fragment_converter,
@@ -92,6 +98,8 @@ class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
             }
         })
 
+        ShineAnimator().setShineView(binding.withdraw).setDelayEvery(3000).setInterpolator(LinearInterpolator()).start()
+        ShineAnimator().setShineView(binding.deposit).setDelayEvery(3000).setInterpolator(LinearInterpolator()).start()
 
     }
 }
