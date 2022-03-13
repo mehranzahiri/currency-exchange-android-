@@ -145,9 +145,10 @@ class RateViewModel : ScopeViewModel() {
             walletRepository.saveWallet(WalletStruct(from.unit, decreaseAmount))
 
 
+            val toWallet = walletRepository.findWallet(to.unit)
+
             val diffPercent = to.value / from.value
 
-            val toWallet = walletRepository.findWallet(to.unit)
 
             val increaseAmount = (inputAmount.toDouble() * (diffPercent))
             var finalWalletAmount=0.0
