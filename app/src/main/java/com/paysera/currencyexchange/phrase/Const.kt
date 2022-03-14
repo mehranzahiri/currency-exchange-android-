@@ -6,7 +6,7 @@ object Const {
 
 
     //Authorization
-    const val ACCESS_TOKEN_KEY = "a60b4b4f0cf3484d0ce743b0b61e7b80"
+    const val ACCESS_TOKEN_KEY = "b823a8b28b448fd7dc289d0e25dc3607"
 
     //End points
     const val LATEST_RATE_LIST_END_POINT = "latest"
