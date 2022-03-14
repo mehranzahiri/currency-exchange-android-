@@ -2,14 +2,21 @@ package com.paysera.currencyexchange.dialog
 
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
 import android.view.Window
 import com.paysera.currencyexchange.R
 import android.view.LayoutInflater
 import android.view.View
 
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import com.google.android.material.snackbar.Snackbar
 import com.paysera.currencyexchange.databinding.DialogConvertBinding
+import androidx.core.content.ContextCompat.startActivity
+
+import android.content.Intent
+import android.provider.Settings
 
 
 object DialCollection {
@@ -48,4 +55,23 @@ object DialCollection {
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
     }
 
+
+    fun showNetworkErrorSnackbar(view:View,message:String):Snackbar{
+        val snackbar = Snackbar.make(view, message,
+            Snackbar.LENGTH_INDEFINITE).setAction("Turn On") {
+            Intent(Settings.ACTION_WIFI_SETTINGS).also { intent ->
+                view.context.startActivity(intent)
+            }
+        }
+        snackbar.setActionTextColor(Color.WHITE)
+        val snackbarView = snackbar.view
+        snackbarView.setBackgroundColor(ContextCompat.getColor(view.context,R.color.original_orange))
+        val textView =
+            snackbarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+        textView.setTextColor(Color.WHITE)
+        textView.textSize = 16f
+        snackbar.show()
+
+        return snackbar
+    }
 }

@@ -32,6 +32,12 @@ class RateViewModel : ScopeViewModel() {
     val buyValue = MutableLiveData<String>().apply {
         value = "select some unit for sell"
     }
+
+    val showNetworkSnackbar = MutableLiveData<String>()
+    val hideNetworkSnackbar = SingleLiveEvent<String>()
+
+    var isNetWorkAvailable = true
+
     private lateinit var timer: CountDownTimer
 
     var sellPosition = 0
@@ -39,22 +45,32 @@ class RateViewModel : ScopeViewModel() {
 
     val inputValue = ObservableField<String>()
 
-    fun initRateListFragment() {
-        showProgressDialog.value = true
+    fun initRateListFragment(networkConnected: Boolean) {
+        isNetWorkAvailable = networkConnected
 
-        fetchData()
-
-        timer = object : CountDownTimer(10_000, 1000) {
+        // every minute we synchronize our data
+        timer = object : CountDownTimer(60_000, 1000) {
             override fun onTick(millisUntilFinished: Long) {}
             override fun onFinish() {
-                fetchData()
+                if (isNetWorkAvailable) {
+                    fetchData()
 
-                timer.start()
+                    timer.start()
+                }
+
             }
         }
 
-        timer.start()
 
+        onNetWorkChanged(networkConnected)
+    }
+
+    // fetch list every 10 sec.
+    private fun scheduleFetchRateList() {
+        showProgressDialog.value = true
+        fetchData()
+
+        timer.start()
     }
 
     private fun fetchData() {
@@ -136,8 +152,9 @@ class RateViewModel : ScopeViewModel() {
             var decreaseAmount = fromWallete.value - inputAmount.toDouble()
 
             var commission = 0.0
-            if (walletRepository.getExchangeCounter() > 5){
-                commission = Math.round((inputAmount.toDouble() * Const.COMMISSION_AMOUNT)*100.0)/100.0
+            if (walletRepository.getExchangeCounter() > 5) {
+                commission =
+                    Math.round((inputAmount.toDouble() * Const.COMMISSION_AMOUNT) * 100.0) / 100.0
             }
 
             decreaseAmount -= commission
@@ -151,7 +168,7 @@ class RateViewModel : ScopeViewModel() {
 
 
             val increaseAmount = (inputAmount.toDouble() * (diffPercent))
-            var finalWalletAmount=0.0
+            var finalWalletAmount = 0.0
             toWallet?.let { toWallet ->
                 finalWalletAmount = (toWallet.value + increaseAmount)
             } ?: kotlin.run {
@@ -162,7 +179,7 @@ class RateViewModel : ScopeViewModel() {
 
             convertDialog.postValue(Bundle().apply {
                 putString("from", TextEditor.commaSeparator(inputAmount))
-                putString("to",TextEditor.commaSeparator(increaseAmount.toString()))
+                putString("to", TextEditor.commaSeparator(increaseAmount.toString()))
                 putString("from_unit", fromWallete.unit)
                 putString("to_unit", toWallet?.unit)
                 putString("commission", "-${TextEditor.commaSeparator(commission.toString())} ")
@@ -172,6 +189,23 @@ class RateViewModel : ScopeViewModel() {
         } ?: kotlin.run {
             showMessageStr.value =
                 "Not enough ${from.unit} for exchange!\n First convert your wallet to ${from.unit}."
+        }
+
+    }
+
+    // observe network state
+    fun onNetWorkChanged(status: Boolean?) {
+        status?.let {
+            isNetWorkAvailable = it
+
+            if (status == true) {
+                hideNetworkSnackbar.call()
+
+                // restart schedule fetch data
+                scheduleFetchRateList()
+            } else {
+                showNetworkSnackbar.postValue("Mobile Network Not Available!")
+            }
         }
 
     }

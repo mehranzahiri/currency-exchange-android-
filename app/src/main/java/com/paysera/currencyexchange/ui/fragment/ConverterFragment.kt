@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import com.google.android.material.snackbar.Snackbar
+import com.paysera.currencyexchange.App
 import com.paysera.currencyexchange.R
 import com.paysera.currencyexchange.databinding.FragmentConverterBinding
 import com.paysera.currencyexchange.dialog.DialCollection
-import com.paysera.currencyexchange.extention.observeOnce
+import com.paysera.currencyexchange.extention.isNetworkConnected
 import com.paysera.currencyexchange.ui.adapter.WalletAdapter
 import com.paysera.currencyexchange.ui.template.MvvmFragment
+import com.paysera.currencyexchange.utils.NetworkLiveData
 import com.paysera.currencyexchange.utils.TextEditor
 import com.paysera.currencyexchange.viewModel.RateViewModel
 
@@ -57,10 +60,9 @@ class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
             }
         }
 
-        data.walletList.observeOnce(viewLifecycleOwner) {
+        data.walletList.observe(viewLifecycleOwner) {
             adapter.updateCustom(it)
         }
-        data.initRateListFragment()
 
         binding.pickkerWithdraw.setOnItemSelectedListener { picker, item, position ->
             data.onSellWheelChange(position)
@@ -98,5 +100,30 @@ class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
             }
         })
 
+        var snackbar:Snackbar?=null
+
+        data.showNetworkSnackbar.observe(viewLifecycleOwner) {
+            view?.let { it1 -> snackbar=DialCollection.showNetworkErrorSnackbar(it1, it) }
+        }
+
+        data.hideNetworkSnackbar.observe(viewLifecycleOwner) {
+            snackbar?.dismiss()
+        }
+
+        observeNetworkState()
+
+        data.initRateListFragment(requireContext().isNetworkConnected())
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // check network each time we come back to this fragment
+        data.onNetWorkChanged(requireContext().isNetworkConnected())
+    }
+    private fun observeNetworkState() {
+        NetworkLiveData(App.get()).observe(viewLifecycleOwner) {
+            data.onNetWorkChanged(it)
+        }
     }
 }
