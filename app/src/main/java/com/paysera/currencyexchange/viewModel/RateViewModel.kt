@@ -13,6 +13,7 @@ import com.paysera.currencyexchange.model.repository.WalletRepository
 import com.paysera.currencyexchange.phrase.Const
 import com.paysera.currencyexchange.utils.SingleLiveEvent
 import com.paysera.currencyexchange.utils.TextEditor
+import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 
 class RateViewModel : ScopeViewModel() {
@@ -76,12 +77,13 @@ class RateViewModel : ScopeViewModel() {
     private fun fetchData() {
 
         scope.launch {
-            rateRepository.fetchRateList(
+            async {   rateRepository.fetchRateList(
                 accessKey = Const.ACCESS_TOKEN_KEY,
                 format = 1
             )
 
-            showProgressDialog.value = false
+                showProgressDialog.value = false}
+
         }
     }
 

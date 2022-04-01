@@ -4,7 +4,6 @@ object Const {
 
     const val COMMISSION_AMOUNT = 0.0007
 
-
     //Authorization
     const val ACCESS_TOKEN_KEY = "b823a8b28b448fd7dc289d0e25dc3607"
 

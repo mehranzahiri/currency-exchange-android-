@@ -5,6 +5,11 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
+import android.view.ViewGroup
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 import com.google.android.material.snackbar.Snackbar
 import com.paysera.currencyexchange.App
 import com.paysera.currencyexchange.R
@@ -113,6 +118,12 @@ class ConverterFragment : MvvmFragment<FragmentConverterBinding, RateViewModel>(
         observeNetworkState()
 
         data.initRateListFragment(requireContext().isNetworkConnected())
+
+
+
+
+
+
     }
 
     override fun onResume() {

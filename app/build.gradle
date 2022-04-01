@@ -117,7 +117,46 @@ dependencies {
     // Design
     implementation 'androidx.gridlayout:gridlayout:1.0.0'
     implementation 'com.airbnb.android:lottie:3.4.1'
+    implementation 'com.bluelinelabs:conductor:3.1.4'
+
+// AndroidX Transition change handlers:
+    implementation 'com.bluelinelabs:conductor-androidx-transition:3.1.4'
+
+// ViewPager PagerAdapter:
+    implementation 'com.bluelinelabs:conductor-viewpager:3.1.4'
+
+// ViewPager2 Adapter:
+    implementation 'com.bluelinelabs:conductor-viewpager2:3.1.4'
+
+// RxJava2 Autodispose support:
+    implementation 'com.bluelinelabs:conductor-autodispose:3.1.4'
+
+// Lifecycle-aware Controllers (architecture components):
+    implementation 'com.bluelinelabs:conductor-archlifecycle:3.1.4'
+
+
+
 
     //Module
     implementation project(':app:wheelpicker')
+
+
+//
+    implementation 'com.bluelinelabs:conductor:3.1.4'
+
+// AndroidX Transition change handlers:
+    implementation 'com.bluelinelabs:conductor-androidx-transition:3.1.4'
+
+// ViewPager PagerAdapter:
+    implementation 'com.bluelinelabs:conductor-viewpager:3.1.4'
+
+// ViewPager2 Adapter:
+    implementation 'com.bluelinelabs:conductor-viewpager2:3.1.4'
+
+// RxJava2 Autodispose support:
+    implementation 'com.bluelinelabs:conductor-autodispose:3.1.4'
+
+// Lifecycle-aware Controllers (architecture components):
+    implementation 'com.bluelinelabs:conductor-archlifecycle:3.1.4'
+
 }
